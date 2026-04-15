@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal Siege</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:        #0d0f14;
+      --surface:   #161b26;
+      --border:    #252d3d;
+      --accent:    #4f8ef7;
+      --accent-dim:#2c5cbf;
+      --text:      #e2e8f0;
+      --muted:     #8896aa;
+      --radius:    10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ── layout ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── header / hero ── */
+    header {
+      background: linear-gradient(160deg, #0d1a3a 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 1.5rem 4rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #7eb3ff, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      margin-top: 1.1rem;
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── nav ── */
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav .container {
+      display: flex;
+      gap: 0.25rem;
+      padding-top: 0.6rem;
+      padding-bottom: 0.6rem;
+      overflow-x: auto;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 0.35rem 0.85rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    nav a:hover, nav a:focus {
+      color: var(--text);
+      background: var(--border);
+      outline: none;
+    }
+
+    /* ── sections ── */
+    section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    section h2 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      color: var(--accent);
+    }
+
+    section p {
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    /* ── feature grid ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--accent-dim);
+      transform: translateY(-2px);
+    }
+
+    .feature-card .icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* ── screenshots ── */
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.75rem;
+    }
+
+    .screenshot-placeholder {
+      background: var(--surface);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      aspect-ratio: 9 / 16;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .screenshot-placeholder .ph-icon {
+      font-size: 2.5rem;
+      opacity: 0.4;
+    }
+
+    /* ── contact ── */
+    #contact p { margin-bottom: 0.5rem; }
+
+    #contact a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    #contact a:hover { text-decoration: underline; }
+
+    /* ── footer ── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    footer p + p { margin-top: 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <header>
+    <div class="container">
+      <h1>Portal Siege</h1>
+      <p>Merge units, build your army, and survive waves of enemies in this strategic autobattler.</p>
+    </div>
+  </header>
+
+  <!-- Sticky nav -->
+  <nav aria-label="Page sections">
+    <div class="container">
+      <a href="#overview">Overview</a>
+      <a href="#features">Features</a>
+      <a href="#screenshots">Screenshots</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+
+      <!-- Overview -->
+      <section id="overview">
+        <h2>Game Overview</h2>
+        <p>
+          Portal Siege is a mobile strategy game that combines the addictive loop of merge mechanics
+          with the intensity of wave-based combat. Collect and merge units to evolve a powerful army,
+          then deploy them against relentless enemy waves that escalate with every round.
+        </p>
+        <p style="margin-top:1rem;">
+          Careful positioning, timely upgrades, and smart merging decisions are the keys to
+          defeating increasingly dangerous bosses and pushing deeper into enemy territory.
+          How far can you go?
+        </p>
+      </section>
+
+      <!-- Features -->
+      <section id="features">
+        <h2>Features</h2>
+        <p>Everything you need for an engaging, endlessly replayable experience.</p>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <span class="icon">🔗</span>
+            <h3>Merge System</h3>
+            <p>Combine identical units to create more powerful versions and discover new troop types.</p>
+          </div>
+          <div class="feature-card">
+            <span class="icon">🌊</span>
+            <h3>Endless Waves</h3>
+            <p>Face escalating waves of enemies that test your strategy and adaptability every round.</p>
+          </div>
+          <div class="feature-card">
+            <span class="icon">💀</span>
+            <h3>Epic Bosses</h3>
+            <p>Confront powerful boss enemies that require clever tactics and upgraded troops to defeat.</p>
+          </div>
+          <div class="feature-card">
+            <span class="icon">⬆️</span>
+            <h3>Upgrades</h3>
+            <p>Spend earned resources on permanent upgrades that strengthen your army over time.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Screenshots -->
+      <section id="screenshots">
+        <h2>Screenshots</h2>
+        <p>A sneak peek at Portal Siege — screenshots coming soon.</p>
+
+        <div class="screenshots-grid">
+          <div class="screenshot-placeholder">
+            <span class="ph-icon">📱</span>
+            <span>Screenshot 1</span>
+          </div>
+          <div class="screenshot-placeholder">
+            <span class="ph-icon">📱</span>
+            <span>Screenshot 2</span>
+          </div>
+          <div class="screenshot-placeholder">
+            <span class="ph-icon">📱</span>
+            <span>Screenshot 3</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>Have questions, feedback, or press inquiries? Reach out anytime.</p>
+        <p style="margin-top:1rem;">
+          📧 <a href="mailto:pedro.ramos9@hotmail.com">pedro.ramos9@hotmail.com</a>
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Portal Siege. All rights reserved.</p>
+    <p><a href="privacy-policy.html">Privacy Policy</a></p>
+  </footer>
+
+</body>
+</html>
