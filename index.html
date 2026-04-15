@@ -222,7 +222,9 @@
   <header>
     <div class="container">
       <h1>Portal Siege</h1>
-      <p>Merge units, build your army, and survive waves of enemies in this strategic autobattler.</p>
+      <p>Portal Siege (formerly "MergeAutobattler") is a mobile-first autobattler where you merge units,
+        build an army, and survive escalating waves of enemies. The game is built with Angular and Pixi.js
+        and is available as a web build and an Android app (packaged with Capacitor).</p>
     </div>
   </header>
 
@@ -230,6 +232,7 @@
   <nav aria-label="Page sections">
     <div class="container">
       <a href="#overview">Overview</a>
+      <a href="#modes">Modes</a>
       <a href="#features">Features</a>
       <a href="#screenshots">Screenshots</a>
       <a href="#contact">Contact</a>
@@ -254,31 +257,103 @@
         </p>
       </section>
 
+      <section id="modes">
+        <h2>Game Modes</h2>
+        <p>Portal Siege supports multiple playstyles: story-driven missions and infinite survival runs.</p>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>Story Mode</h3>
+            <p>Play curated missions and chapters with scripted waves, a story shop, and locked research nodes that unlock progression. Early missions use "elite" normal enemies (HP multipliers) for readable difficulty without complex boss mechanics.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Infinity Mode (Quick Run)</h3>
+            <p>Survive endless, escalating waves. This mode focuses on long-term strategy and resource efficiency—how far can you push your army?</p>
+          </div>
+          <div class="feature-card">
+            <h3>Research Systems</h3>
+            <p>Two complementary research systems are available: <strong>Run Research</strong> (session-only bonuses applied during a run) and <strong>Permanent Research</strong> (meta upgrades that persist between runs, e.g., bench slots, starting gold, summon-cost changes, and castle HP bonuses).</p>
+          </div>
+        </div>
+      </section>
+
       <!-- Features -->
       <section id="features">
         <h2>Features</h2>
-        <p>Everything you need for an engaging, endlessly replayable experience.</p>
+        <p>Core systems and quality-of-life features drawn from the game's source.</p>
 
         <div class="features-grid">
           <div class="feature-card">
             <span class="icon">🔗</span>
-            <h3>Merge System</h3>
-            <p>Combine identical units to create more powerful versions and discover new troop types.</p>
+            <h3>Merge Engine</h3>
+            <p>Match two units of the same type and tier to create a stronger unit — the primary progression loop.</p>
           </div>
           <div class="feature-card">
-            <span class="icon">🌊</span>
-            <h3>Endless Waves</h3>
-            <p>Face escalating waves of enemies that test your strategy and adaptability every round.</p>
+            <span class="icon">🧭</span>
+            <h3>3×3 Battle Grid</h3>
+            <p>Battles resolve on a compact grid; positioning matters — tanks hold, rogues flank, archers snipe from behind.</p>
           </div>
           <div class="feature-card">
-            <span class="icon">💀</span>
-            <h3>Epic Bosses</h3>
-            <p>Confront powerful boss enemies that require clever tactics and upgraded troops to defeat.</p>
+            <span class="icon">🪑</span>
+            <h3>Bench & Staging</h3>
+            <p>Use the bench to hold spare units and plan merges without clogging the active board before a wave.</p>
           </div>
           <div class="feature-card">
-            <span class="icon">⬆️</span>
-            <h3>Upgrades</h3>
-            <p>Spend earned resources on permanent upgrades that strengthen your army over time.</p>
+            <span class="icon">✨</span>
+            <h3>Permanent Research</h3>
+            <p>Meta progression unlocks long-term upgrades between runs to smooth early play and expand strategies.</p>
+          </div>
+          <div class="feature-card">
+            <span class="icon">💰</span>
+            <h3>Summons & Economy</h3>
+            <p>Spend gold to summon units and feed the merge engine — resource timing is part of the strategy.</p>
+          </div>
+          <div class="feature-card">
+            <span class="icon">🔁</span>
+            <h3>Save / Transfer</h3>
+            <p>Export and import save data to move progress between devices.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="how-to-play">
+        <h2>How to Play</h2>
+        <p>Quick tips to get started and improve faster.</p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>Merge</h3>
+            <p>Combine identical units to upgrade them — merging saves board space and is key for late waves.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Grid & Bench</h3>
+            <p>Only the 3×3 active grid fights. Use the bench to stage future merges and avoid cluttering the board.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Summons</h3>
+            <p>Spend gold to summon — prioritize value and timing over impulse purchases.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Research</h3>
+            <p>Choose research that complements your run: army power, castle survival, control, or economy.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="get">
+        <h2>Get the Game</h2>
+        <p>Build and distribution info for Portal Siege.</p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>Web Demo</h3>
+            <p>Play the latest web build on GitHub Pages: <a href="https://pedro7161.github.io/Portal-Siege-pages/">Portal Siege (Web)</a>.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Android</h3>
+            <p>The app is packaged with Capacitor and can be built for Android (app id: <code>com.yourcompany.mergeautobattler</code>).</p>
+          </div>
+          <div class="feature-card">
+            <h3>Source</h3>
+            <p>Source code and development tools are in the `merge-autobattler` repository (Angular + Pixi.js).</p>
           </div>
         </div>
       </section>
@@ -317,7 +392,7 @@
   </main>
 
   <footer>
-    <p>&copy; 2025 Portal Siege. All rights reserved.</p>
+    <p>&copy; 2026 Portal Siege. All rights reserved.</p>
     <p><a href="privacy-policy.html">Privacy Policy</a></p>
   </footer>
 
