@@ -1,0 +1,22 @@
+{
+  ".github/workflows/static.yml": {
+    "mtime": 1776266541.896233,
+    "ast_hash": "4bbcd37da310febbd93503bd5d458eb7",
+    "semantic_hash": "4bbcd37da310febbd93503bd5d458eb7"
+  },
+  "README.md": {
+    "mtime": 1776266541.896233,
+    "ast_hash": "f22b45ebf691a790d6e563f22818dc6f",
+    "semantic_hash": "f22b45ebf691a790d6e563f22818dc6f"
+  },
+  "index.html": {
+    "mtime": 1776269765.1036322,
+    "ast_hash": "69d2b2b2b9f1c8917f600ac7d946fa41",
+    "semantic_hash": "69d2b2b2b9f1c8917f600ac7d946fa41"
+  },
+  "privacy-policy.html": {
+    "mtime": 1776268325.481674,
+    "ast_hash": "d704eda52528881c9008a819ceb74ac6",
+    "semantic_hash": "d704eda52528881c9008a819ceb74ac6"
+  }
+}

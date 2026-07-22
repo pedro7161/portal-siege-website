@@ -1,0 +1,812 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "site_deployment_hyperedge",
+        "label": "GitHub Pages site deployment: workflow publishes index.html and privacy-policy.html",
+        "nodes": [
+          "index",
+          "privacy_policy",
+          "_github_workflows_static_deploy_workflow"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85,
+        "source_file": ".github/workflows/static.yml"
+      },
+      {
+        "id": "play_store_privacy_requirement_hyperedge",
+        "label": "Privacy policy as Google Play Console submission requirement for the Android/Capacitor app",
+        "nodes": [
+          "readme_project_structure",
+          "privacy_policy",
+          "index_get_section"
+        ],
+        "relation": "form",
+        "confidence": "INFERRED",
+        "confidence_score": 0.75,
+        "source_file": "README.md"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "Deploy static content to Pages (GitHub Actions workflow)",
+      "file_type": "code",
+      "source_file": ".github/workflows/static.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "_github_workflows_static_deploy_workflow",
+      "community": 3,
+      "norm_label": "deploy static content to pages (github actions workflow)"
+    },
+    {
+      "label": "Workflow triggers (push to main, workflow_dispatch)",
+      "file_type": "concept",
+      "source_file": ".github/workflows/static.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "_github_workflows_static_triggers",
+      "community": 3,
+      "norm_label": "workflow triggers (push to main, workflow_dispatch)"
+    },
+    {
+      "label": "Deploy job (checkout, configure-pages, upload-pages-artifact, deploy-pages)",
+      "file_type": "concept",
+      "source_file": ".github/workflows/static.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "_github_workflows_static_deploy_job",
+      "community": 3,
+      "norm_label": "deploy job (checkout, configure-pages, upload-pages-artifact, deploy-pages)"
+    },
+    {
+      "label": "Portal Siege Website README",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme",
+      "community": 4,
+      "norm_label": "portal siege website readme"
+    },
+    {
+      "label": "Live URLs table (main page, privacy policy)",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_live_urls",
+      "community": 4,
+      "norm_label": "live urls table (main page, privacy policy)"
+    },
+    {
+      "label": "Deploying to GitHub Pages instructions",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_deploy_instructions",
+      "community": 3,
+      "norm_label": "deploying to github pages instructions"
+    },
+    {
+      "label": "Project structure listing (index.html, privacy-policy.html, README.md)",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_project_structure",
+      "community": 4,
+      "norm_label": "project structure listing (index.html, privacy-policy.html, readme.md)"
+    },
+    {
+      "label": "Portal Siege main page (index.html)",
+      "file_type": "document",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "index",
+      "community": 1,
+      "norm_label": "portal siege main page (index.html)"
+    },
+    {
+      "label": "Hero section (title + tagline)",
+      "file_type": "concept",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "index_hero_section",
+      "community": 1,
+      "norm_label": "hero section (title + tagline)"
+    },
+    {
+      "label": "Sticky navigation (Overview, Modes, Features, Screenshots, Contact)",
+      "file_type": "concept",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "index_nav_section",
+      "community": 2,
+      "norm_label": "sticky navigation (overview, modes, features, screenshots, contact)"
+    },
+    {
+      "label": "Game Overview section",
+      "file_type": "concept",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "index_overview_section",
+      "community": 2,
+      "norm_label": "game overview section"
+    },
+    {
+      "label": "Game Modes section (Story Mode, Infinity Mode, Research Systems)",
+      "file_type": "concept",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Early Story Mode missions use 'elite' normal enemies (HP multipliers) instead of full boss mechanics, explicitly to give readable difficulty without complex boss mechanics.",
+      "id": "index_modes_section",
+      "community": 2,
+      "norm_label": "game modes section (story mode, infinity mode, research systems)"
+    },
+    {
+      "label": "Features section (merge, survive waves, upgrades, bosses, missions)",
+      "file_type": "concept",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "index_features_section",
+      "community": 2,
+      "norm_label": "features section (merge, survive waves, upgrades, bosses, missions)"
+    },
+    {
+      "label": "How to Play section (Merge, Grid & Bench, Summons, Research)",
+      "file_type": "concept",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "index_how_to_play_section",
+      "community": 1,
+      "norm_label": "how to play section (merge, grid & bench, summons, research)"
+    },
+    {
+      "label": "Progression section (story missions, chapter bosses)",
+      "file_type": "concept",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "index_progression_section",
+      "community": 1,
+      "norm_label": "progression section (story missions, chapter bosses)"
+    },
+    {
+      "label": "Status section (in development, coming soon to Google Play)",
+      "file_type": "concept",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "index_status_section",
+      "community": 1,
+      "norm_label": "status section (in development, coming soon to google play)"
+    },
+    {
+      "label": "Get the Game section (Web Demo, Android/Capacitor, Source)",
+      "file_type": "concept",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "index_get_section",
+      "community": 1,
+      "norm_label": "get the game section (web demo, android/capacitor, source)"
+    },
+    {
+      "label": "Screenshots section (placeholders)",
+      "file_type": "concept",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "index_screenshots_section",
+      "community": 2,
+      "norm_label": "screenshots section (placeholders)"
+    },
+    {
+      "label": "Contact section (portalsiege@outlook.com)",
+      "file_type": "concept",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "index_contact_section",
+      "community": 2,
+      "norm_label": "contact section (portalsiege@outlook.com)"
+    },
+    {
+      "label": "Footer (copyright + Privacy Policy link)",
+      "file_type": "concept",
+      "source_file": "index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "index_footer_section",
+      "community": 0,
+      "norm_label": "footer (copyright + privacy policy link)"
+    },
+    {
+      "label": "Privacy Policy page (privacy-policy.html)",
+      "file_type": "document",
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "privacy_policy",
+      "community": 0,
+      "norm_label": "privacy policy page (privacy-policy.html)"
+    },
+    {
+      "label": "Overview section (no personal data collected, stored, or shared)",
+      "file_type": "concept",
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "privacy_policy_overview_section",
+      "community": 0,
+      "norm_label": "overview section (no personal data collected, stored, or shared)"
+    },
+    {
+      "label": "Data Storage section (progress stored locally on device only)",
+      "file_type": "concept",
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "privacy_policy_data_storage_section",
+      "community": 0,
+      "norm_label": "data storage section (progress stored locally on device only)"
+    },
+    {
+      "label": "Data Collection section (no name/email/device ID/location/telemetry collected)",
+      "file_type": "concept",
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "privacy_policy_data_collection_section",
+      "community": 0,
+      "norm_label": "data collection section (no name/email/device id/location/telemetry collected)"
+    },
+    {
+      "label": "Third-Party Services section (no analytics/ads/crash-reporting integrated)",
+      "file_type": "concept",
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "privacy_policy_third_party_services_section",
+      "community": 0,
+      "norm_label": "third-party services section (no analytics/ads/crash-reporting integrated)"
+    },
+    {
+      "label": "Children's Privacy section (safe for under 13)",
+      "file_type": "concept",
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "privacy_policy_childrens_privacy_section",
+      "community": 0,
+      "norm_label": "children's privacy section (safe for under 13)"
+    },
+    {
+      "label": "Changes to This Policy section",
+      "file_type": "concept",
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "privacy_policy_changes_section",
+      "community": 0,
+      "norm_label": "changes to this policy section"
+    },
+    {
+      "label": "Contact section (portalsiege@outlook.com)",
+      "file_type": "concept",
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "privacy_policy_contact_section",
+      "community": 0,
+      "norm_label": "contact section (portalsiege@outlook.com)"
+    }
+  ],
+  "links": [
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".github/workflows/static.yml",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "_github_workflows_static_deploy_workflow",
+      "target": "_github_workflows_static_deploy_job"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".github/workflows/static.yml",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "_github_workflows_static_deploy_workflow",
+      "target": "_github_workflows_static_triggers"
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".github/workflows/static.yml",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "_github_workflows_static_deploy_workflow",
+      "target": "index"
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".github/workflows/static.yml",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "_github_workflows_static_deploy_workflow",
+      "target": "privacy_policy"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "AMBIGUOUS",
+      "confidence_score": 0.3,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_deploy_instructions",
+      "target": "_github_workflows_static_deploy_workflow"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme",
+      "target": "readme_deploy_instructions"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme",
+      "target": "readme_live_urls"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme",
+      "target": "readme_project_structure"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_live_urls",
+      "target": "index"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_live_urls",
+      "target": "privacy_policy"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_project_structure",
+      "target": "index"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_project_structure",
+      "target": "privacy_policy"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index",
+      "target": "index_contact_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index",
+      "target": "index_features_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index",
+      "target": "index_footer_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index",
+      "target": "index_get_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index",
+      "target": "index_hero_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index",
+      "target": "index_how_to_play_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index",
+      "target": "index_modes_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index",
+      "target": "index_nav_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index",
+      "target": "index_overview_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index",
+      "target": "index_progression_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index",
+      "target": "index_screenshots_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index",
+      "target": "index_status_section"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "privacy_policy",
+      "target": "index"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index_nav_section",
+      "target": "index_contact_section"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index_nav_section",
+      "target": "index_features_section"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index_nav_section",
+      "target": "index_modes_section"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index_nav_section",
+      "target": "index_overview_section"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index_nav_section",
+      "target": "index_screenshots_section"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "index_footer_section",
+      "target": "privacy_policy"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "privacy_policy",
+      "target": "privacy_policy_changes_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "privacy_policy",
+      "target": "privacy_policy_childrens_privacy_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "privacy_policy",
+      "target": "privacy_policy_contact_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "privacy_policy",
+      "target": "privacy_policy_data_collection_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "privacy_policy",
+      "target": "privacy_policy_data_storage_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "privacy_policy",
+      "target": "privacy_policy_overview_section"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "privacy-policy.html",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "privacy_policy",
+      "target": "privacy_policy_third_party_services_section"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "site_deployment_hyperedge",
+      "label": "GitHub Pages site deployment: workflow publishes index.html and privacy-policy.html",
+      "nodes": [
+        "index",
+        "privacy_policy",
+        "_github_workflows_static_deploy_workflow"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".github/workflows/static.yml"
+    },
+    {
+      "id": "play_store_privacy_requirement_hyperedge",
+      "label": "Privacy policy as Google Play Console submission requirement for the Android/Capacitor app",
+      "nodes": [
+        "readme_project_structure",
+        "privacy_policy",
+        "index_get_section"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "README.md"
+    }
+  ],
+  "built_at_commit": "d36f076bb913a66f97b45b962b565be948bca70a"
+}
