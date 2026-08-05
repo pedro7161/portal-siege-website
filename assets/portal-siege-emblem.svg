@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img" aria-labelledby="title desc">
+  <title id="title">Portal Siege emblem</title>
+  <desc id="desc">A glowing violet portal framed by a fortified stone arch and crossed weapons.</desc>
+  <defs>
+    <radialGradient id="portal" cx="50%" cy="46%" r="52%">
+      <stop offset="0" stop-color="#f7e7ff"/>
+      <stop offset=".28" stop-color="#c98cff"/>
+      <stop offset=".63" stop-color="#7137bd"/>
+      <stop offset="1" stop-color="#1d102c"/>
+    </radialGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#d2c6ae"/>
+      <stop offset=".5" stop-color="#827764"/>
+      <stop offset="1" stop-color="#403a34"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <circle cx="360" cy="350" r="255" fill="#0a0911" stroke="#251d31" stroke-width="28"/>
+  <ellipse cx="360" cy="350" rx="152" ry="220" fill="url(#portal)" filter="url(#glow)"/>
+  <ellipse cx="360" cy="350" rx="105" ry="176" fill="none" stroke="#f0d6ff" stroke-opacity=".58" stroke-width="8"/>
+  <path d="M178 589 282 474M542 589 438 474" stroke="#bdc6d8" stroke-width="24" stroke-linecap="round"/>
+  <path d="m159 608 44-13-31-31zM561 608l-44-13 31-31z" fill="#e9edf5"/>
+  <path d="M185 501h75M460 501h75" stroke="#8f6b37" stroke-width="22" stroke-linecap="round"/>
+  <path d="M181 485c-35-103-18-224 55-310 32-38 73-69 124-91 51 22 92 53 124 91 73 86 90 207 55 310l-74-37c22-74 6-154-43-211-17-20-38-38-62-52-24 14-45 32-62 52-49 57-65 137-43 211z" fill="url(#stone)" stroke="#302b26" stroke-width="12"/>
+  <path d="M238 200h70v57h-70zm174 0h70v57h-70zM203 294h79v62h-79zm235 0h79v62h-79z" fill="#3d3731" opacity=".78"/>
+  <path d="M223 477h274l42 106H181z" fill="#29251f" stroke="#8d806c" stroke-width="12"/>
+  <path d="M254 509h212" stroke="#c5b89e" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="360" cy="350" r="292" fill="none" stroke="#b888ff" stroke-opacity=".18" stroke-width="3"/>
+</svg>
