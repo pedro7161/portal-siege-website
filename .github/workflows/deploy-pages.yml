@@ -21,7 +21,7 @@ jobs:
       - name: Check out website
         uses: actions/checkout@v4
 
-      - name: Check out private shared assets (sparse, no LFS download)
+      - name: Check out private shared assets
         uses: actions/checkout@v4
         with:
           repository: pedro7161/Portal-Siege-Assets
@@ -30,11 +30,10 @@ jobs:
           path: .shared-assets
           fetch-depth: 1
           lfs: false
-          sparse-checkout-cone-mode: false
           sparse-checkout: |
             .gitattributes
-            final/web/assets/**
-            assets/website/**
+            final/web
+            assets/website
 
       - name: Restore shared asset LFS cache
         uses: actions/cache@v4
@@ -44,7 +43,7 @@ jobs:
           restore-keys: |
             portal-siege-assets-lfs-${{ runner.os }}-
 
-      - name: Download only website LFS objects
+      - name: Download website LFS objects
         shell: bash
         run: |
           set -euo pipefail
@@ -71,7 +70,6 @@ jobs:
             ASSET_SOURCE=.shared-assets/assets/website
           else
             echo 'No website export folder found in Portal-Siege-Assets.' >&2
-            echo 'Expected final/web/assets or assets/website.' >&2
             exit 1
           fi
 
@@ -89,25 +87,22 @@ jobs:
           site = Path('_site')
           asset_root = site / 'assets' / 'game'
           image_extensions = {'.png', '.jpg', '.jpeg', '.webp', '.gif', '.avif'}
-
           images = sorted(
               path.relative_to(asset_root).as_posix()
               for path in asset_root.rglob('*')
               if path.is_file() and path.suffix.lower() in image_extensions
           )
 
-          manifest_path = asset_root / 'manifest.json'
-          manifest_path.write_text(
+          if not images:
+              raise SystemExit('No deployable images were found in the shared website export.')
+
+          (asset_root / 'manifest.json').write_text(
               json.dumps({'count': len(images), 'images': images}, indent=2),
               encoding='utf-8',
           )
 
-          if not images:
-              raise SystemExit('No deployable images were found in the shared website export.')
-
           index_path = site / 'index.html'
           html = index_path.read_text(encoding='utf-8')
-
           injection = r'''
           <style>
             .game-art-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin-top:2rem}
@@ -120,50 +115,37 @@ jobs:
           <script>
             (() => {
               const createGallery = async () => {
-                try {
-                  const response = await fetch('assets/game/manifest.json', {cache: 'no-store'});
-                  if (!response.ok) throw new Error(`Manifest request failed: ${response.status}`);
-                  const manifest = await response.json();
-                  const images = Array.isArray(manifest.images) ? manifest.images.slice(0, 24) : [];
-                  if (!images.length) return;
+                const response = await fetch('assets/game/manifest.json', {cache: 'no-store'});
+                if (!response.ok) return;
+                const manifest = await response.json();
+                const images = Array.isArray(manifest.images) ? manifest.images.slice(0, 24) : [];
+                if (!images.length) return;
 
-                  const section = document.createElement('section');
-                  section.id = 'game-art';
-                  section.innerHTML = `
-                    <div class="wrap">
-                      <div class="section-head">
-                        <div><p class="eyebrow">Shared asset repository</p><h2>Game art from Portal Siege.</h2></div>
-                        <p>These images are loaded from the curated web export in <strong>Portal-Siege-Assets</strong> during deployment.</p>
-                      </div>
-                      <div class="game-art-grid"></div>
-                    </div>`;
+                const section = document.createElement('section');
+                section.id = 'game-art';
+                section.innerHTML = `<div class="wrap"><div class="section-head"><div><p class="eyebrow">Shared asset repository</p><h2>Game art from Portal Siege.</h2></div><p>These images are loaded from the curated web export in <strong>Portal-Siege-Assets</strong> during deployment.</p></div><div class="game-art-grid"></div></div>`;
 
-                  const grid = section.querySelector('.game-art-grid');
-                  images.forEach((relativePath) => {
-                    const figure = document.createElement('figure');
-                    const card = document.createElement('div');
-                    const image = document.createElement('img');
-                    const caption = document.createElement('figcaption');
+                const grid = section.querySelector('.game-art-grid');
+                images.forEach((relativePath) => {
+                  const figure = document.createElement('figure');
+                  const card = document.createElement('div');
+                  const image = document.createElement('img');
+                  const caption = document.createElement('figcaption');
+                  card.className = 'game-art-card';
+                  image.loading = 'lazy';
+                  image.decoding = 'async';
+                  image.src = `assets/game/${relativePath.split('/').map(encodeURIComponent).join('/')}`;
+                  image.alt = relativePath.split('/').pop().replace(/[-_]/g, ' ').replace(/\.[^.]+$/, '');
+                  caption.className = 'game-art-meta';
+                  caption.textContent = relativePath;
+                  card.appendChild(image);
+                  figure.append(card, caption);
+                  grid.appendChild(figure);
+                });
 
-                    card.className = 'game-art-card';
-                    image.loading = 'lazy';
-                    image.decoding = 'async';
-                    image.src = `assets/game/${relativePath.split('/').map(encodeURIComponent).join('/')}`;
-                    image.alt = relativePath.split('/').pop().replace(/[-_]/g, ' ').replace(/\.[^.]+$/, '');
-                    caption.className = 'game-art-meta';
-                    caption.textContent = relativePath;
-
-                    card.appendChild(image);
-                    figure.append(card, caption);
-                    grid.appendChild(figure);
-                  });
-
-                  const main = document.querySelector('main');
-                  const status = document.querySelector('#status');
-                  if (main) main.insertBefore(section, status || null);
-                } catch (error) {
-                  console.error('Unable to load shared Portal Siege assets.', error);
-                }
+                const main = document.querySelector('main');
+                const status = document.querySelector('#status');
+                if (main) main.insertBefore(section, status || null);
               };
 
               if (document.readyState === 'loading') {
@@ -177,10 +159,8 @@ jobs:
 
           if '</body>' not in html:
               raise SystemExit('index.html does not contain a closing body tag.')
-
-          html = html.replace('</body>', injection + '\n</body>', 1)
-          index_path.write_text(html, encoding='utf-8')
-          print(f'Published {len(images)} shared images and added the game-art gallery.')
+          index_path.write_text(html.replace('</body>', injection + '\n</body>'), encoding='utf-8')
+          print(f'Prepared {len(images)} shared images for the gallery.')
           PY
 
       - name: Configure Pages
