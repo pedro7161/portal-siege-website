@@ -3,410 +3,152 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portal Siege</title>
+  <meta name="description" content="Portal Siege is a dark-fantasy strategy autobattler in development. Build a 3x3 army, merge units, survive escalating waves, research upgrades, and defeat race-themed bosses." />
+  <meta name="theme-color" content="#0b0710" />
+  <meta property="og:title" content="Portal Siege — Build the line. Break the siege." />
+  <meta property="og:description" content="A dark-fantasy merge autobattler with seven recruitable classes, multi-race enemy armies, story missions, infinite runs, research, and boss encounters." />
+  <meta property="og:type" content="website" />
+  <title>Portal Siege — Dark Fantasy Strategy Autobattler</title>
   <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --bg:        #0d0f14;
-      --surface:   #161b26;
-      --border:    #252d3d;
-      --accent:    #4f8ef7;
-      --accent-dim:#2c5cbf;
-      --text:      #e2e8f0;
-      --muted:     #8896aa;
-      --radius:    10px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      font-size: 1rem;
-      line-height: 1.7;
-    }
-
-    /* ── layout ── */
-    .container {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-
-    /* ── header / hero ── */
-    header {
-      background: linear-gradient(160deg, #0d1a3a 0%, var(--bg) 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 5rem 1.5rem 4rem;
-      text-align: center;
-    }
-
-    header h1 {
-      font-size: clamp(2.4rem, 6vw, 3.8rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      background: linear-gradient(90deg, #7eb3ff, var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    header p {
-      margin-top: 1.1rem;
-      font-size: 1.15rem;
-      color: var(--muted);
-      max-width: 540px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* ── nav ── */
-    nav {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    nav .container {
-      display: flex;
-      gap: 0.25rem;
-      padding-top: 0.6rem;
-      padding-bottom: 0.6rem;
-      overflow-x: auto;
-    }
-
-    nav a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 500;
-      padding: 0.35rem 0.85rem;
-      border-radius: 6px;
-      white-space: nowrap;
-      transition: color 0.2s, background 0.2s;
-    }
-
-    nav a:hover, nav a:focus {
-      color: var(--text);
-      background: var(--border);
-      outline: none;
-    }
-
-    /* ── sections ── */
-    section {
-      padding: 4rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    section:last-of-type { border-bottom: none; }
-
-    section h2 {
-      font-size: 1.65rem;
-      font-weight: 700;
-      margin-bottom: 1.25rem;
-      color: var(--accent);
-    }
-
-    section p {
-      color: var(--muted);
-      max-width: 680px;
-    }
-
-    /* ── feature grid ── */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem;
-      margin-top: 2rem;
-    }
-
-    .feature-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .feature-card:hover {
-      border-color: var(--accent-dim);
-      transform: translateY(-2px);
-    }
-
-    .feature-card .icon {
-      font-size: 2rem;
-      margin-bottom: 0.75rem;
-      display: block;
-    }
-
-    .feature-card h3 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .feature-card p {
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    /* ── screenshots ── */
-    .screenshots-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-top: 1.75rem;
-    }
-
-    .screenshot-placeholder {
-      background: var(--surface);
-      border: 2px dashed var(--border);
-      border-radius: var(--radius);
-      aspect-ratio: 9 / 16;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    .screenshot-placeholder .ph-icon {
-      font-size: 2.5rem;
-      opacity: 0.4;
-    }
-
-    /* ── contact ── */
-    #contact p { margin-bottom: 0.5rem; }
-
-    #contact a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    #contact a:hover { text-decoration: underline; }
-
-    /* ── footer ── */
-    footer {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 2rem 1.5rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    footer a:hover { text-decoration: underline; }
-
-    footer p + p { margin-top: 0.4rem; }
+    *,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}body,h1,h2,h3,p,ul{margin:0}ul{padding:0;list-style:none}
+    :root{--bg:#09070d;--bg-2:#110c18;--panel:#17111f;--panel-2:#21162c;--line:#392847;--text:#f5f0e8;--muted:#bcb1c4;--gold:#e6ba62;--violet:#b875ff;--violet-2:#7342b9;--danger:#df6f62;--green:#79b996;--max:1160px;--radius:18px}
+    body{background:radial-gradient(circle at 50% -10%,#241433 0,transparent 34rem),var(--bg);color:var(--text);font:16px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+    a{color:inherit}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;z-index:1000;background:#fff;color:#000;padding:.75rem 1rem;border-radius:.5rem}
+    .wrap{width:min(calc(100% - 2rem),var(--max));margin-inline:auto}.eyebrow{color:var(--gold);font-size:.78rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.muted{color:var(--muted)}
+    nav{position:sticky;top:0;z-index:50;background:rgba(9,7,13,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(184,117,255,.16)}.nav-inner{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:1rem}.brand{font-family:Georgia,serif;font-weight:800;letter-spacing:.08em;text-decoration:none}.brand span{color:var(--violet)}.links{display:flex;gap:1.25rem;align-items:center}.links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:700}.links a:hover,.links a:focus-visible{color:var(--text)}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.1rem;border-radius:999px;text-decoration:none;font-weight:800;border:1px solid var(--line);background:var(--panel);transition:.2s}.button:hover{transform:translateY(-2px);border-color:var(--violet)}.button.primary{background:linear-gradient(135deg,var(--violet),var(--violet-2));color:#100717;border:0}.button.secondary{background:transparent}
+    .hero{min-height:760px;display:grid;align-items:center;position:relative;padding:5rem 0 4rem}.hero::after{content:"";position:absolute;inset:auto 0 0;height:140px;background:linear-gradient(transparent,var(--bg));pointer-events:none}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:3rem}.hero h1{font:800 clamp(3.4rem,8vw,7.2rem)/.88 Georgia,serif;letter-spacing:-.06em;max-width:850px}.hero h1 span{display:block;color:var(--violet);text-shadow:0 0 35px rgba(184,117,255,.3)}.hero-copy{font-size:clamp(1.05rem,2vw,1.25rem);color:var(--muted);max-width:690px;margin:1.5rem 0}.actions{display:flex;flex-wrap:wrap;gap:.8rem}.status-pill{display:inline-flex;align-items:center;gap:.5rem;color:#d9cfe1;background:rgba(121,185,150,.1);border:1px solid rgba(121,185,150,.35);padding:.45rem .75rem;border-radius:999px;font-weight:700;font-size:.85rem;margin-bottom:1.2rem}.dot{width:.55rem;height:.55rem;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}.emblem{width:min(100%,520px);filter:drop-shadow(0 28px 55px rgba(0,0,0,.5));animation:float 6s ease-in-out infinite}@keyframes float{50%{transform:translateY(-12px)}}
+    section{padding:6rem 0;border-top:1px solid rgba(255,255,255,.05)}.section-head{display:grid;grid-template-columns:.8fr 1.2fr;gap:2rem;margin-bottom:2.5rem}.section-head h2{font:800 clamp(2.2rem,5vw,4.2rem)/1 Georgia,serif;letter-spacing:-.035em}.section-head p{color:var(--muted);font-size:1.05rem;max-width:720px}
+    .loop{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;counter-reset:loop}.card{background:linear-gradient(145deg,rgba(33,22,44,.92),rgba(18,13,24,.96));border:1px solid var(--line);border-radius:var(--radius);padding:1.35rem;box-shadow:0 18px 50px rgba(0,0,0,.18)}.loop .card::before{counter-increment:loop;content:"0" counter(loop);display:block;color:var(--gold);font:800 1rem Georgia,serif;margin-bottom:2.4rem}.card h3{font-size:1.08rem;margin-bottom:.45rem}.card p{color:var(--muted);font-size:.93rem}
+    .class-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.75rem}.class-card{min-height:190px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}.class-card::before{content:"";position:absolute;width:110px;height:110px;border-radius:50%;top:-40px;right:-35px;background:radial-gradient(circle,var(--violet),transparent 68%);opacity:.22}.class-card strong{font-family:Georgia,serif;font-size:1.1rem}.class-card small{color:var(--gold)}
+    .tier-band{margin-top:1rem;border:1px solid var(--line);border-radius:var(--radius);padding:1.4rem;background:linear-gradient(90deg,rgba(184,117,255,.08),rgba(230,186,98,.06))}.tiers{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-top:.8rem}.tier{padding:.45rem .8rem;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-weight:800}.arrow{color:var(--gold)}
+    .race-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.race-card{min-height:170px}.race-card .sigil{font-size:2rem;margin-bottom:1.2rem}.race-card ul{margin-top:.8rem;color:var(--muted);font-size:.88rem}.race-card li+li{margin-top:.25rem}
+    .boss-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.boss-card{position:relative;overflow:hidden}.boss-card::after{content:"";position:absolute;inset:auto -20% -55% 30%;height:140px;background:radial-gradient(circle,var(--danger),transparent 70%);opacity:.12}.boss-card b{color:var(--gold);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}.boss-card h3{font-family:Georgia,serif;font-size:1.35rem;margin:.35rem 0}.boss-card p{position:relative;z-index:1}
+    .systems{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}.system{padding:1.7rem}.system h3{font:800 1.55rem Georgia,serif;margin-bottom:.55rem}.system .tag{display:inline-block;margin-top:1rem;padding:.3rem .55rem;border:1px solid var(--line);border-radius:6px;color:var(--gold);font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+    .showcase{display:grid;grid-template-columns:1.25fr .75fr;gap:1rem}.scene{min-height:360px;border-radius:var(--radius);border:1px solid var(--line);position:relative;overflow:hidden;background:linear-gradient(#29183a 0 52%,#211615 52%)}.scene::before{content:"";position:absolute;left:8%;top:18%;width:150px;height:250px;border:22px solid #8d806c;border-bottom:0;border-radius:80px 80px 0 0;box-shadow:inset 0 0 45px var(--violet),0 0 38px rgba(184,117,255,.35)}.scene::after{content:"";position:absolute;left:calc(8% + 22px);top:calc(18% + 22px);width:106px;height:228px;border-radius:60px 60px 0 0;background:radial-gradient(circle at 50% 40%,#ead8ff,#8e49d5 42%,#29143f 78%)}.battle-line{position:absolute;right:7%;bottom:15%;display:flex;gap:10px;align-items:flex-end}.unit{width:44px;border:3px solid #201824;border-radius:18px 18px 8px 8px;background:#d7c5a0}.unit:nth-child(1){height:88px}.unit:nth-child(2){height:115px;background:#be754f}.unit:nth-child(3){height:74px;background:#9f87c7}.unit:nth-child(4){height:102px;background:#d5b35a}.showcase-copy{display:grid;gap:1rem}
+    .development{background:linear-gradient(145deg,rgba(115,66,185,.15),rgba(230,186,98,.06));border:1px solid var(--line);border-radius:calc(var(--radius) + 6px);padding:clamp(1.5rem,5vw,3rem);display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center}.development h2{font:800 clamp(2rem,5vw,3.5rem)/1 Georgia,serif;margin:.5rem 0}.development p{color:var(--muted);max-width:720px}
+    footer{padding:2.5rem 0;border-top:1px solid var(--line);color:var(--muted)}.footer-grid{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}.footer-links{display:flex;gap:1rem;flex-wrap:wrap}.footer-links a:hover{color:var(--text)}
+    @media(max-width:900px){.links a:not(.button){display:none}.hero{min-height:auto;padding-top:4rem}.hero-grid,.section-head,.showcase{grid-template-columns:1fr}.hero-copy{max-width:none}.emblem{max-width:390px;margin-inline:auto}.loop{grid-template-columns:repeat(2,1fr)}.class-grid{grid-template-columns:repeat(3,1fr)}.race-grid{grid-template-columns:repeat(2,1fr)}.boss-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){.wrap{width:min(calc(100% - 1.2rem),var(--max))}.nav-inner{min-height:60px}.links .button{padding:.6rem .8rem;font-size:.8rem}.hero{padding-top:3rem}.hero-grid{gap:1rem}.hero h1{font-size:clamp(3rem,17vw,4.7rem)}section{padding:4.5rem 0}.loop,.race-grid,.boss-grid,.systems{grid-template-columns:1fr}.class-grid{grid-template-columns:repeat(2,1fr)}.class-card{min-height:150px}.development{grid-template-columns:1fr}.scene{min-height:300px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.emblem{animation:none}.button{transition:none}}
   </style>
 </head>
 <body>
-
-  <!-- Hero -->
-  <header>
-    <div class="container">
-      <h1>Merge, upgrade, and command your army to survive relentless waves of enemies.</h1>
-      <p>Portal Siege is a fast-paced autobattler where every decision matters. Merge units, build your strategy, and adapt in real time to survive increasingly difficult waves and powerful bosses.</p>
-    </div>
-  </header>
-
-  <!-- Sticky nav -->
-  <nav aria-label="Page sections">
-    <div class="container">
-      <a href="#overview">Overview</a>
-      <a href="#modes">Modes</a>
-      <a href="#features">Features</a>
-      <a href="#screenshots">Screenshots</a>
-      <a href="#contact">Contact</a>
+  <a class="skip" href="#main">Skip to content</a>
+  <nav aria-label="Primary navigation">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">PORTAL <span>SIEGE</span></a>
+      <div class="links">
+        <a href="#gameplay">Gameplay</a><a href="#army">Army</a><a href="#enemies">Enemies</a><a href="#bosses">Bosses</a>
+        <a class="button" href="https://github.com/pedro7161/Portal-Siege" rel="noopener">Game repository</a>
+      </div>
     </div>
   </nav>
 
-  <main>
-    <div class="container">
-
-      <!-- Overview -->
-      <section id="overview">
-        <h2>Game Overview</h2>
-        <p>
-          Portal Siege throws you into tense, tactical clashes where clever merges and sharp positioning
-          turn small squads into dominant forces. Each wave forces real choices — hold the line,
-          gamble on a summon, or bank merges for a powerful upgrade.
-        </p>
-        <p style="margin-top:1rem;">
-          The loop is simple to learn but rich to master: summon, merge, and adapt. Waves escalate,
-          bosses arrive with brutal mechanics, and the best players find repeatable strategies that scale.
-        </p>
-      </section>
-
-      <section id="modes">
-        <h2>Game Modes</h2>
-        <p>Portal Siege supports multiple playstyles: story-driven missions and infinite survival runs.</p>
-
-        <div class="features-grid">
-          <div class="feature-card">
-            <span class="icon">📖</span>
-            <h3>Story Mode</h3>
-            <p>Play curated missions and chapters with scripted waves, a story shop, and locked research nodes that unlock progression. Early missions use "elite" normal enemies (HP multipliers) for readable difficulty without complex boss mechanics.</p>
-          </div>
-          <div class="feature-card">
-            <span class="icon">♾️</span>
-            <h3>Infinity Mode (Quick Run)</h3>
-            <p>Survive endless, escalating waves. This mode focuses on long-term strategy and resource efficiency—how far can you push your army?</p>
-          </div>
-          <div class="feature-card">
-            <span class="icon">⚙️</span>
-            <h3>Research Systems</h3>
-            <p>Two complementary research systems are available: <strong>Run Research</strong> (session-only bonuses applied during a run) and <strong>Permanent Research</strong> (meta upgrades that persist between runs, e.g., bench slots, starting gold, summon-cost changes, and castle HP bonuses).</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Features -->
-      <section id="features">
-        <h2>Features</h2>
-        <p>Key gameplay pillars that define Portal Siege.</p>
-
-        <div class="features-grid">
-          <div class="feature-card">
-            <span class="icon">🔗</span>
-            <h3>Merge units</h3>
-            <p>Merge units to create stronger fighters during battle.</p>
-          </div>
-          <div class="feature-card">
-            <span class="icon">🌊</span>
-            <h3>Survive waves</h3>
-            <p>Survive increasingly difficult waves of enemies that demand smarter play each round.</p>
-          </div>
-          <div class="feature-card">
-            <span class="icon">⬆️</span>
-            <h3>Unlock upgrades</h3>
-            <p>Unlock powerful upgrades and evolve your strategy across runs and missions.</p>
-          </div>
-          <div class="feature-card">
-            <span class="icon">💀</span>
-            <h3>Face bosses</h3>
-            <p>Face unique bosses at the end of each chapter with distinct mechanics and threats.</p>
-          </div>
-          <div class="feature-card">
-            <span class="icon">🗺️</span>
-            <h3>Handcrafted missions</h3>
-            <p>Progress through handcrafted story missions that introduce new mechanics and pacing.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="how-to-play">
-        <h2>How to Play</h2>
-        <p>Fast tips to turn early advantage into late-game dominance.</p>
-        <div class="features-grid">
-          <div class="feature-card">
-            <span class="icon">🔗</span>
-            <h3>Merge</h3>
-            <p>Combine identical units to upgrade them — every merge reshapes the battlefield and unlocks new synergies.</p>
-          </div>
-          <div class="feature-card">
-            <span class="icon">🪑</span>
-            <h3>Grid & Bench</h3>
-            <p>Only the 3×3 active grid fights. Use the bench to stage merges, bait swaps, and control tempo between waves.</p>
-          </div>
-          <div class="feature-card">
-            <span class="icon">💰</span>
-            <h3>Summons</h3>
-            <p>Spend gold to summon units; well-timed summons secure upgrades or stabilize a faltering run.</p>
-          </div>
-          <div class="feature-card">
-            <span class="icon">🔬</span>
-            <h3>Research</h3>
-            <p>Pick run research to amplify your strategy — ramp up damage, fortify the castle, or skew enemy behavior.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="progression">
-        <h2>Progression</h2>
-        <p>Progress through story-based missions with carefully designed enemy waves. Each chapter introduces new challenges and ends with a powerful boss encounter.</p>
-      </section>
-
-      <section id="status">
-        <h2>Status</h2>
-        <p>Portal Siege is currently in development and will be available soon on Google Play.</p>
-      </section>
-
-      <section id="get">
-        <h2>Get the Game</h2>
-        <p>Build and distribution info for Portal Siege.</p>
-        <div class="features-grid">
-          <div class="feature-card">
-            <span class="icon">🌐</span>
-            <h3>Web Demo</h3>
-            <p>Play the latest web build on GitHub Pages: <a href="https://pedro7161.github.io/Portal-Siege-pages/">Portal Siege (Web)</a>.</p>
-          </div>
-          <div class="feature-card">
-            <span class="icon">🤖</span>
-            <h3>Android</h3>
-            <p>The app is packaged with Capacitor and can be built for Android (app id: <code>com.yourcompany.mergeautobattler</code>).</p>
-          </div>
-          <div class="feature-card">
-            <span class="icon">💻</span>
-            <h3>Source</h3>
-            <p>Source code and development tools are in the `merge-autobattler` repository (Angular + Pixi.js).</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Screenshots -->
-      <section id="screenshots">
-        <h2>Screenshots</h2>
-        <p>A sneak peek at Portal Siege — screenshots coming soon.</p>
-
-        <div class="screenshots-grid">
-          <div class="screenshot-placeholder">
-            <span class="ph-icon">📱</span>
-            <span>Screenshot 1</span>
-          </div>
-          <div class="screenshot-placeholder">
-            <span class="ph-icon">📱</span>
-            <span>Screenshot 2</span>
-          </div>
-          <div class="screenshot-placeholder">
-            <span class="ph-icon">📱</span>
-            <span>Screenshot 3</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Contact -->
-      <section id="contact">
-        <h2>Contact</h2>
-        <p>Have questions, feedback, or press inquiries? Reach out anytime.</p>
-        <p style="margin-top:1rem;">
-          📧 <a href="mailto:portalsiege@outlook.com">portalsiege@outlook.com</a>
-        </p>
-      </section>
-
+  <header class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="status-pill"><span class="dot"></span>In active development</div>
+        <p class="eyebrow">Dark fantasy strategy autobattler</p>
+        <h1>Build the line.<span>Break the siege.</span></h1>
+        <p class="hero-copy">Recruit and merge a growing Human army on a 3×3 battle grid, survive escalating enemy waves, shape each run through research, and bring down portals, war machines, and race-themed bosses.</p>
+        <div class="actions"><a class="button primary" href="#gameplay">Explore the game</a><a class="button secondary" href="#status">Development status</a></div>
+      </div>
+      <img class="emblem" src="assets/portal-siege-emblem.svg" alt="Portal Siege emblem: a violet portal inside a fortified stone arch" width="720" height="720" />
     </div>
+  </header>
+
+  <main id="main">
+    <section id="gameplay">
+      <div class="wrap">
+        <div class="section-head"><div><p class="eyebrow">Core loop</p><h2>Prepare. Merge. Survive. Evolve.</h2></div><p>Portal Siege separates tactical preparation from real-time combat. Build your formation, improve identical units through merging, then watch your choices collide with increasingly dangerous enemy compositions.</p></div>
+        <div class="loop">
+          <article class="card"><h3>Recruit</h3><p>Spend gold to summon units from the classes currently unlocked for your run or story progression.</p></article>
+          <article class="card"><h3>Arrange</h3><p>Place the active army on a 3×3 grid and use the reserve bench to prepare merges and manage tempo.</p></article>
+          <article class="card"><h3>Fight</h3><p>Units automatically target, move, attack, heal, and trigger researched abilities during each wave.</p></article>
+          <article class="card"><h3>Research</h3><p>Choose run upgrades, earn persistent essence, and unlock permanent improvements between attempts.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="army">
+      <div class="wrap">
+        <div class="section-head"><div><p class="eyebrow">Human army</p><h2>Seven classes. Distinct battlefield roles.</h2></div><p>The implemented recruitable roster ranges from durable frontliners to support specialists. Each class has its own stat growth, visual tier progression, and role in a balanced formation.</p></div>
+        <div class="class-grid">
+          <article class="card class-card"><small>Tank</small><strong>Knight</strong><p>Armor-focused frontline.</p></article>
+          <article class="card class-card"><small>Melee DPS</small><strong>Rogue</strong><p>Fast single-target pressure.</p></article>
+          <article class="card class-card"><small>Ranged DPS</small><strong>Archer</strong><p>Long-range physical attacks.</p></article>
+          <article class="card class-card"><small>Off-tank</small><strong>Paladin</strong><p>Durable hybrid fighter.</p></article>
+          <article class="card class-card"><small>Aggressive DPS</small><strong>Berserker</strong><p>Heavy damage, light defense.</p></article>
+          <article class="card class-card"><small>Area damage</small><strong>Mage</strong><p>Ranged splash attacks.</p></article>
+          <article class="card class-card"><small>Support</small><strong>Cleric</strong><p>Heals damaged allies.</p></article>
+        </div>
+        <div class="tier-band"><strong>Class-specific tier progression</strong><p class="muted">Merge two identical units to climb through stronger visual and statistical tiers. Knight currently supports five art tiers; the other implemented Human classes support up to six.</p><div class="tiers" aria-label="Tier progression"><span class="tier">Tier 1</span><span class="arrow">→</span><span class="tier">Tier 2</span><span class="arrow">→</span><span class="tier">Tier 3</span><span class="arrow">→</span><span class="tier">Tier 4</span><span class="arrow">→</span><span class="tier">Tier 5</span><span class="arrow">→</span><span class="tier">Tier 6*</span></div></div>
+      </div>
+    </section>
+
+    <section id="enemies">
+      <div class="wrap">
+        <div class="section-head"><div><p class="eyebrow">Enemy armies</p><h2>Every wave can bring a different war.</h2></div><p>The current game data supports a multi-race enemy system with role-based categories such as tanks, bruisers, assassins, ranged attackers, casters, and support units.</p></div>
+        <div class="race-grid">
+          <article class="card race-card"><div class="sigil">🔥</div><h3>Demons</h3><ul><li>Doom Guardians and Infernal Knights</li><li>Warlocks, archers, and assassins</li></ul></article>
+          <article class="card race-card"><div class="sigil">⚒️</div><h3>Dwarves</h3><ul><li>Defenders, golems, and iron guards</li><li>Riflemen, engineers, and runesmiths</li></ul></article>
+          <article class="card race-card"><div class="sigil">🌙</div><h3>Elves</h3><ul><li>Sentinels, blademasters, and rangers</li><li>Druids, priests, and assassins</li></ul></article>
+          <article class="card race-card"><div class="sigil">☠️</div><h3>Skeletons</h3><ul><li>Bone warriors and berserkers</li><li>Necromancers and death priests</li></ul></article>
+          <article class="card race-card"><div class="sigil">🌊</div><h3>Merfolk</h3><ul><li>Tide guardians and spear hunters</li><li>Tidemages, oracles, and assassins</li></ul></article>
+          <article class="card race-card"><div class="sigil">🪓</div><h3>Orcs</h3><ul><li>Warlords, marksmen, and bonecrushers</li><li>Berserkers and shamans</li></ul></article>
+          <article class="card race-card"><div class="sigil">🌳</div><h3>Treants</h3><ul><li>Ancient frontline elders</li><li>Bruiser and support variants</li></ul></article>
+          <article class="card race-card"><div class="sigil">🌀</div><h3>Portal forces</h3><ul><li>Legacy demon wave units</li><li>Boss-spawned reinforcements</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="bosses">
+      <div class="wrap">
+        <div class="section-head"><div><p class="eyebrow">Boss encounters</p><h2>Signature threats demand new formations.</h2></div><p>Bosses are implemented with distinct stats, immunities, mechanics, and named signature moves. The roster currently includes five demon encounters and six race-themed champions.</p></div>
+        <div class="boss-grid">
+          <article class="card boss-card"><b>Demon</b><h3>Mace Lord</h3><p>Crushes clustered frontlines with the knockback-heavy Slam.</p></article>
+          <article class="card boss-card"><b>Demon siege</b><h3>Ballista Demon</h3><p>A stationary war machine that bombards the board with Barrage.</p></article>
+          <article class="card boss-card"><b>Demon</b><h3>Pitchfork Fiend</h3><p>Applies relentless poison pressure through Rot.</p></article>
+          <article class="card boss-card"><b>Demon cavalry</b><h3>Spear Rider</h3><p>Dashes into a rapid combo before entering a recovery window.</p></article>
+          <article class="card boss-card"><b>Structure boss</b><h3>Portal Guardian</h3><p>Regenerates and summons reinforcements during Siege.</p></article>
+          <article class="card boss-card"><b>Orc</b><h3>Orc Warlord</h3><p>Disrupts the battle line with Warlord’s Cleave.</p></article>
+          <article class="card boss-card"><b>Skeleton</b><h3>Skeletal Reaper</h3><p>Spreads necrotic poison with Withering Scythe.</p></article>
+          <article class="card boss-card"><b>Dwarf</b><h3>Dwarf Forgemaster</h3><p>An armored hammer wielder with the Hammerfall slam.</p></article>
+          <article class="card boss-card"><b>Elf</b><h3>Elven Stormcaller</h3><p>Rains area lightning through Thunderstrike Volley.</p></article>
+          <article class="card boss-card"><b>Merfolk</b><h3>Merfolk Tidecaller</h3><p>Controls distance with the long-reaching Tidal Lash.</p></article>
+          <article class="card boss-card"><b>Treant</b><h3>Treant Grovewarden</h3><p>Regenerates and calls thorned saplings with Verdant Bloom.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="systems">
+      <div class="wrap">
+        <div class="section-head"><div><p class="eyebrow">Progression systems</p><h2>Build a run—and a legacy.</h2></div><p>Portal Siege combines session decisions with persistent progression, while Story Mode uses missions, chapter bosses, currency, and unlocks to introduce systems over time.</p></div>
+        <div class="systems">
+          <article class="card system"><h3>Run Research</h3><p>Develop damage, durability, economy, castle defenses, unit abilities, and enemy modifiers during the current run.</p><span class="tag">Resets each run</span></article>
+          <article class="card system"><h3>Permanent Research</h3><p>Spend earned essence on persistent upgrades such as extra bench capacity, starting resources, and broader research access.</p><span class="tag">Persistent</span></article>
+          <article class="card system"><h3>Story Mode</h3><p>Advance through mission-based chapters, unlock classes and research branches, and face curated boss encounters.</p><span class="tag">Structured campaign</span></article>
+          <article class="card system"><h3>Infinite Mode</h3><p>Push through escalating procedural waves and test how long your army, economy, and research plan can survive.</p><span class="tag">Endless survival</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="visual-title">
+      <div class="wrap showcase">
+        <div class="scene" role="img" aria-label="Stylized battlefield with a glowing portal facing a four-unit army"><div class="battle-line"><span class="unit"></span><span class="unit"></span><span class="unit"></span><span class="unit"></span></div></div>
+        <div class="showcase-copy"><article class="card"><p class="eyebrow">Visual identity</p><h2 id="visual-title">Dark fantasy with readable combat.</h2><p>Current asset organization covers race, class, tier, structures, bosses, effects, projectiles, and attack-animation sequences. The website uses a restrained interpretation until selected game artwork is prepared for public presentation.</p></article><article class="card"><h3>Structures and siege</h3><p>Implemented asset paths include the Human castle, Demon portal, boss portal, projectiles, melee effects, and the Ballista Demon siege boss.</p></article></div>
+      </div>
+    </section>
+
+    <section id="status">
+      <div class="wrap development">
+        <div><p class="eyebrow">Current status</p><h2>An expanding playable project.</h2><p>Portal Siege is in active development. The repository contains working Story and Infinite modes, combat, progression, save data, discovery and almanac systems, audio, localization support, Android packaging, and a rapidly expanding sprite library. This page avoids promising a release date or storefront availability that is not confirmed by the current project.</p></div>
+        <a class="button primary" href="mailto:portalsiege@outlook.com">Contact the developer</a>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 Portal Siege. All rights reserved.</p>
-    <p><a href="privacy-policy.html">Privacy Policy</a></p>
-  </footer>
-
+  <footer><div class="wrap footer-grid"><p>© 2026 Portal Siege. An independent game in development.</p><div class="footer-links"><a href="https://github.com/pedro7161/Portal-Siege" rel="noopener">GitHub</a><a href="privacy-policy.html">Privacy Policy</a><a href="mailto:portalsiege@outlook.com">Email</a></div></div></footer>
 </body>
 </html>
