@@ -2,22 +2,33 @@
 
 Static GitHub Pages website for **Portal Siege**, a dark-fantasy strategy autobattler currently in development.
 
-The website content is synchronized against the game repository:
+The website content is synchronized against:
 
 - Game repository: `pedro7161/Portal-Siege`
-- Primary content branch used: `feature/ai-sprite-assets`
+- Shared asset repository: `pedro7161/Portal-Siege-Assets`
+- Primary game content branch used: `feature/ai-sprite-assets`
 - Stable implementation reference: `main`
 
 ## Project structure
 
 ```text
 portal-siege-website/
+├── .github/workflows/deploy-pages.yml
 ├── assets/
 │   └── portal-siege-emblem.svg
+├── docs/shared-assets.md
 ├── index.html
 ├── privacy-policy.html
 └── README.md
 ```
+
+During deployment, curated files from the private asset repository are copied into the generated site at:
+
+```text
+assets/game/
+```
+
+The private source repository itself is never published.
 
 ## Content represented
 
@@ -35,7 +46,7 @@ The landing page reflects repository-backed features including:
 
 ## Local preview
 
-No build tool is required. Open `index.html` directly, or serve the repository root with any static file server.
+No build tool is required for the base site. Open `index.html` directly, or serve the repository root with any static file server.
 
 Example:
 
@@ -45,10 +56,26 @@ python3 -m http.server 8080
 
 Then open `http://localhost:8080/`.
 
+Shared images are not committed to this repository. For a full local preview, populate `assets/game/` from the curated website export in `Portal-Siege-Assets`.
+
 ## Deployment
 
-The repository remains compatible with GitHub Pages deployed from the repository root. In repository settings, select **Pages**, choose **Deploy from a branch**, and publish the `main` branch from `/ (root)` after changes are reviewed and merged.
+Deployment is handled by `.github/workflows/deploy-pages.yml`.
+
+The workflow:
+
+1. checks out this public website repository;
+2. checks out the private `Portal-Siege-Assets` repository using the `ASSETS_REPO_TOKEN` secret;
+3. copies only `final/web/assets/` or `assets/website/` into `assets/game/`;
+4. uploads the assembled static site to GitHub Pages.
+
+After merging this setup:
+
+- add the `ASSETS_REPO_TOKEN` Actions secret;
+- set **Settings → Pages → Source** to **GitHub Actions**.
+
+See `docs/shared-assets.md` for the token and folder contract.
 
 ## Asset policy
 
-Only lightweight, presentation-ready website assets should be added here. Raw generation batches, processing artifacts, duplicated sprites, and internal asset-working folders from the game repository should not be copied wholesale.
+The website consumes only lightweight, presentation-ready exports. Raw generation batches, layered project files, processing history, duplicated sprites, and game-only assets remain in the private shared asset repository.
