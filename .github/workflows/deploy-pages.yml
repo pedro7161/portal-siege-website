@@ -1,0 +1,76 @@
+name: Deploy Portal Siege website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v4
+
+      - name: Check out private shared assets
+        uses: actions/checkout@v4
+        with:
+          repository: pedro7161/Portal-Siege-Assets
+          ref: main
+          token: ${{ secrets.ASSETS_REPO_TOKEN }}
+          path: .shared-assets
+          lfs: true
+
+      - name: Assemble Pages artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          rm -rf _site
+          mkdir -p _site/assets/game
+
+          rsync -a ./ _site/ \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --exclude '.shared-assets/' \
+            --exclude '_site/'
+
+          if [[ -d .shared-assets/final/web/assets ]]; then
+            ASSET_SOURCE=.shared-assets/final/web/assets
+          elif [[ -d .shared-assets/assets/website ]]; then
+            ASSET_SOURCE=.shared-assets/assets/website
+          else
+            echo 'No website export folder found in Portal-Siege-Assets.' >&2
+            echo 'Expected final/web/assets or assets/website.' >&2
+            exit 1
+          fi
+
+          rsync -a --delete "${ASSET_SOURCE}/" _site/assets/game/
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
