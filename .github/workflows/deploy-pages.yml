@@ -32,8 +32,7 @@ jobs:
           lfs: false
           sparse-checkout: |
             .gitattributes
-            final/web
-            assets/website
+            final/game
 
       - name: Restore shared asset LFS cache
         uses: actions/cache@v4
@@ -43,12 +42,32 @@ jobs:
           restore-keys: |
             portal-siege-assets-lfs-${{ runner.os }}-
 
-      - name: Download website LFS objects
+      - name: Select and download gallery images
         shell: bash
         run: |
           set -euo pipefail
+
+          ASSET_ROOT=.shared-assets/final/game/assets
+          if [[ ! -d "$ASSET_ROOT" ]]; then
+            echo 'Expected final/game/assets in Portal-Siege-Assets.' >&2
+            exit 1
+          fi
+
+          find "$ASSET_ROOT" -type f \
+            \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' -o -iname '*.gif' -o -iname '*.avif' \) \
+            -print | sort | head -n 24 > .selected-assets.txt
+
+          if [[ ! -s .selected-assets.txt ]]; then
+            echo 'No image files found under final/game/assets.' >&2
+            exit 1
+          fi
+
           git -C .shared-assets lfs install --local
-          git -C .shared-assets lfs pull --include="final/web/assets/**,assets/website/**"
+
+          INCLUDE_PATHS=$(sed 's#^\.shared-assets/##' .selected-assets.txt | paste -sd, -)
+          git -C .shared-assets lfs pull --include="$INCLUDE_PATHS" --exclude=''
+
+          echo "Selected $(wc -l < .selected-assets.txt) images for the website gallery."
 
       - name: Assemble Pages artifact
         shell: bash
@@ -62,18 +81,15 @@ jobs:
             --exclude '.git/' \
             --exclude '.github/' \
             --exclude '.shared-assets/' \
+            --exclude '.selected-assets.txt' \
             --exclude '_site/'
 
-          if [[ -d .shared-assets/final/web/assets ]]; then
-            ASSET_SOURCE=.shared-assets/final/web/assets
-          elif [[ -d .shared-assets/assets/website ]]; then
-            ASSET_SOURCE=.shared-assets/assets/website
-          else
-            echo 'No website export folder found in Portal-Siege-Assets.' >&2
-            exit 1
-          fi
-
-          rsync -a --delete "${ASSET_SOURCE}/" _site/assets/game/
+          while IFS= read -r source; do
+            relative=${source#.shared-assets/final/game/assets/}
+            destination="_site/assets/game/$relative"
+            mkdir -p "$(dirname "$destination")"
+            cp "$source" "$destination"
+          done < .selected-assets.txt
 
       - name: Build shared asset gallery
         shell: bash
@@ -82,6 +98,7 @@ jobs:
 
           python3 <<'PY'
           from pathlib import Path
+          import html
           import json
 
           site = Path('_site')
@@ -94,16 +111,27 @@ jobs:
           )
 
           if not images:
-              raise SystemExit('No deployable images were found in the shared website export.')
+              raise SystemExit('No deployable images were copied into the Pages artifact.')
 
           (asset_root / 'manifest.json').write_text(
               json.dumps({'count': len(images), 'images': images}, indent=2),
               encoding='utf-8',
           )
 
-          index_path = site / 'index.html'
-          html = index_path.read_text(encoding='utf-8')
-          injection = r'''
+          cards = []
+          for relative_path in images:
+              encoded_path = '/'.join(__import__('urllib.parse').parse.quote(part) for part in relative_path.split('/'))
+              label = Path(relative_path).stem.replace('-', ' ').replace('_', ' ')
+              cards.append(
+                  '<figure>'
+                  '<div class="game-art-card">'
+                  f'<img loading="lazy" decoding="async" src="assets/game/{encoded_path}" alt="{html.escape(label)}">'
+                  '</div>'
+                  f'<figcaption class="game-art-meta">{html.escape(relative_path)}</figcaption>'
+                  '</figure>'
+              )
+
+          injection = '''
           <style>
             .game-art-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin-top:2rem}
             .game-art-card{min-height:280px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(145deg,rgba(33,22,44,.92),rgba(18,13,24,.96));border:1px solid var(--line);border-radius:var(--radius);padding:.75rem}
@@ -112,54 +140,28 @@ jobs:
             @media(max-width:900px){.game-art-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
             @media(max-width:560px){.game-art-grid{grid-template-columns:1fr}.game-art-card img{height:240px}}
           </style>
-          <script>
-            (() => {
-              const createGallery = async () => {
-                const response = await fetch('assets/game/manifest.json', {cache: 'no-store'});
-                if (!response.ok) return;
-                const manifest = await response.json();
-                const images = Array.isArray(manifest.images) ? manifest.images.slice(0, 24) : [];
-                if (!images.length) return;
-
-                const section = document.createElement('section');
-                section.id = 'game-art';
-                section.innerHTML = `<div class="wrap"><div class="section-head"><div><p class="eyebrow">Shared asset repository</p><h2>Game art from Portal Siege.</h2></div><p>These images are loaded from the curated web export in <strong>Portal-Siege-Assets</strong> during deployment.</p></div><div class="game-art-grid"></div></div>`;
-
-                const grid = section.querySelector('.game-art-grid');
-                images.forEach((relativePath) => {
-                  const figure = document.createElement('figure');
-                  const card = document.createElement('div');
-                  const image = document.createElement('img');
-                  const caption = document.createElement('figcaption');
-                  card.className = 'game-art-card';
-                  image.loading = 'lazy';
-                  image.decoding = 'async';
-                  image.src = `assets/game/${relativePath.split('/').map(encodeURIComponent).join('/')}`;
-                  image.alt = relativePath.split('/').pop().replace(/[-_]/g, ' ').replace(/\.[^.]+$/, '');
-                  caption.className = 'game-art-meta';
-                  caption.textContent = relativePath;
-                  card.appendChild(image);
-                  figure.append(card, caption);
-                  grid.appendChild(figure);
-                });
-
-                const main = document.querySelector('main');
-                const status = document.querySelector('#status');
-                if (main) main.insertBefore(section, status || null);
-              };
-
-              if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', createGallery, {once: true});
-              } else {
-                createGallery();
-              }
-            })();
-          </script>
+          <section id="game-art">
+            <div class="wrap">
+              <div class="section-head">
+                <div><p class="eyebrow">Shared asset repository</p><h2>Game art from Portal Siege.</h2></div>
+                <p>These images are loaded from the finalized game assets during deployment.</p>
+              </div>
+              <div class="game-art-grid">''' + ''.join(cards) + '''</div>
+            </div>
+          </section>
           '''
 
-          if '</body>' not in html:
-              raise SystemExit('index.html does not contain a closing body tag.')
-          index_path.write_text(html.replace('</body>', injection + '\n</body>'), encoding='utf-8')
+          index_path = site / 'index.html'
+          page = index_path.read_text(encoding='utf-8')
+          marker = '<section id="status"'
+          if marker in page:
+              page = page.replace(marker, injection + '\n' + marker, 1)
+          elif '</main>' in page:
+              page = page.replace('</main>', injection + '\n</main>', 1)
+          else:
+              raise SystemExit('Could not find a gallery insertion point in index.html.')
+
+          index_path.write_text(page, encoding='utf-8')
           print(f'Prepared {len(images)} shared images for the gallery.')
           PY
 
