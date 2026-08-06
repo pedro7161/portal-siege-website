@@ -21,14 +21,35 @@ jobs:
       - name: Check out website
         uses: actions/checkout@v4
 
-      - name: Check out private shared assets
+      - name: Check out private shared assets (sparse, no LFS download)
         uses: actions/checkout@v4
         with:
           repository: pedro7161/Portal-Siege-Assets
           ref: main
           token: ${{ secrets.ASSETS_REPO_TOKEN }}
           path: .shared-assets
-          lfs: true
+          fetch-depth: 1
+          lfs: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            .gitattributes
+            final/web/assets/**
+            assets/website/**
+
+      - name: Restore shared asset LFS cache
+        uses: actions/cache@v4
+        with:
+          path: .shared-assets/.git/lfs
+          key: portal-siege-assets-lfs-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            portal-siege-assets-lfs-${{ runner.os }}-
+
+      - name: Download only website LFS objects
+        shell: bash
+        run: |
+          set -euo pipefail
+          git -C .shared-assets lfs install --local
+          git -C .shared-assets lfs pull --include="final/web/assets/**,assets/website/**"
 
       - name: Assemble Pages artifact
         shell: bash
