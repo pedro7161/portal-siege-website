@@ -1,38 +1,54 @@
 # Portal Siege — Website
 
-Static GitHub Pages website for the mobile game **Portal Siege**.
+Static GitHub Pages website for **Portal Siege**, a dark-fantasy strategy autobattler currently in development.
 
-## Live URLs
+The website content is synchronized against the game repository:
 
-| Page | URL |
-|------|-----|
-| Main page | `https://<username>.github.io/portal-siege-website/` |
-| Privacy Policy | `https://<username>.github.io/portal-siege-website/privacy-policy.html` |
+- Game repository: `pedro7161/Portal-Siege`
+- Primary content branch used: `feature/ai-sprite-assets`
+- Stable implementation reference: `main`
 
-> Replace `<username>` with your GitHub username.
+## Project structure
 
-## Deploying to GitHub Pages
-
-1. Push this repository (or your fork) to GitHub.
-2. Go to the repository on GitHub.
-3. Click **Settings** → **Pages** (in the left sidebar).
-4. Under **Build and deployment**, set:
-   - **Source**: `Deploy from a branch`
-   - **Branch**: `main` / `(root)`
-5. Click **Save**.
-
-GitHub Pages will build and publish the site within a minute or two.
-The live URL will be shown at the top of the Pages settings page.
-
-## Project Structure
-
-```
+```text
 portal-siege-website/
-├── index.html            # Main game page
-├── privacy-policy.html   # Privacy policy (required for Google Play Console)
-└── README.md             # This file
+├── assets/
+│   └── portal-siege-emblem.svg
+├── index.html
+├── privacy-policy.html
+└── README.md
 ```
 
-## Local Preview
+## Content represented
 
-Open either HTML file directly in a browser — no build step or server required.
+The landing page reflects repository-backed features including:
+
+- Story Mode and Infinite Mode
+- 3×3 active army grid and reserve bench
+- merging and class-specific unit tiers
+- seven recruitable Human classes
+- multi-race enemy armies
+- eleven configured bosses and signature moves
+- run research and permanent research
+- structures, portals, projectiles, and siege encounters
+- active-development status without an unsupported release date
+
+## Local preview
+
+No build tool is required. Open `index.html` directly, or serve the repository root with any static file server.
+
+Example:
+
+```bash
+python3 -m http.server 8080
+```
+
+Then open `http://localhost:8080/`.
+
+## Deployment
+
+The repository remains compatible with GitHub Pages deployed from the repository root. In repository settings, select **Pages**, choose **Deploy from a branch**, and publish the `main` branch from `/ (root)` after changes are reviewed and merged.
+
+## Asset policy
+
+Only lightweight, presentation-ready website assets should be added here. Raw generation batches, processing artifacts, duplicated sprites, and internal asset-working folders from the game repository should not be copied wholesale.
