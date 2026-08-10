@@ -10,12 +10,21 @@ Only the curated website export folder is published. Raw generations, project fi
 
 ## Asset contract
 
-The workflow checks these source paths in order:
+The deploy workflow pulls an explicit, curated list of file paths directly from
+`final/game/assets/units/...` in the asset repository — one hero-tier sprite per
+playable Human class, plus one flagship unit per implemented enemy race. That list
+lives in `.github/workflows/deploy-pages.yml`'s "Select and download gallery images"
+step, alongside a matching `CAPTIONS` map in "Build shared asset gallery" (every
+source file is literally named `sprite.png`, so captions can't be derived from the
+filename).
 
-1. `final/web/assets/`
-2. `assets/website/`
+`final/web/assets/` and `assets/website/` were an earlier plan for a pre-curated
+export folder the workflow would pull wholesale; that folder was never populated
+(still just a `.gitkeep`), so the workflow was changed to select specific paths
+instead. If a curated export folder gets built later, prefer switching back to it
+over maintaining a hand-picked file list here.
 
-The selected folder is copied into the deployed site as:
+The selected files are copied into the deployed site as:
 
 ```text
 assets/game/
@@ -24,7 +33,7 @@ assets/game/
 Website HTML should therefore use paths such as:
 
 ```html
-<img src="assets/game/units/humans/knight/tier1.webp" alt="Human Knight tier 1">
+<img src="assets/game/units/humans/knight/tier4/sprite.png" alt="Human Knight">
 ```
 
 ## Required repository secret

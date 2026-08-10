@@ -53,12 +53,44 @@ jobs:
             exit 1
           fi
 
-          find "$ASSET_ROOT" -type f \
-            \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' -o -iname '*.gif' -o -iname '*.avif' \) \
-            -print | sort | head -n 24 > .selected-assets.txt
+          # Curated showcase picks — one hero-tier sprite per playable Human class, plus one
+          # flagship unit per implemented enemy race. Deliberately NOT "whatever sorts first
+          # under units/" — that used to surface unused units/constructs/* prototype art
+          # instead of the actual roster. Keep this list and the CAPTIONS map in the gallery
+          # build step below in sync when adding/removing a race or class.
+          cat > .curated-assets.txt <<'CURATED'
+          units/humans/knight/tier4/sprite.png
+          units/humans/archer/tier4/sprite.png
+          units/humans/rogue/tier4/sprite.png
+          units/humans/paladin/tier4/sprite.png
+          units/humans/berserker/tier4/sprite.png
+          units/humans/mage/tier4/sprite.png
+          units/humans/cleric/tier4/sprite.png
+          units/dwarf/golem/tier4/sprite.png
+          units/elf/blademaster/tier4/sprite.png
+          units/skeleton/bone-warrior/tier4/sprite.png
+          units/orc/row-03/tier4/sprite.png
+          units/merfolk/tide-guardian/tier4/sprite.png
+          units/treants/row-05/tier4/sprite.png
+          units/vampire/crowned-vampire-king/sprite.png
+          units/goblin/crowned-warlord/sprite.png
+          CURATED
 
-          if [[ ! -s .selected-assets.txt ]]; then
-            echo 'No image files found under final/game/assets.' >&2
+          : > .selected-assets.txt
+          missing=0
+          while IFS= read -r rel; do
+            [[ -z "$rel" ]] && continue
+            full="$ASSET_ROOT/$rel"
+            if [[ ! -f "$full" ]]; then
+              echo "Missing curated showcase asset: $rel" >&2
+              missing=1
+              continue
+            fi
+            echo "$full" >> .selected-assets.txt
+          done < .curated-assets.txt
+
+          if [[ "$missing" -eq 1 ]]; then
+            echo 'One or more curated showcase assets are missing from Portal-Siege-Assets — update the curated list in this workflow.' >&2
             exit 1
           fi
 
@@ -67,7 +99,7 @@ jobs:
           INCLUDE_PATHS=$(sed 's#^\.shared-assets/##' .selected-assets.txt | paste -sd, -)
           git -C .shared-assets lfs pull --include="$INCLUDE_PATHS" --exclude=''
 
-          echo "Selected $(wc -l < .selected-assets.txt) images for the website gallery."
+          echo "Selected $(wc -l < .selected-assets.txt) curated images for the website gallery."
 
       - name: Assemble Pages artifact
         shell: bash
@@ -82,6 +114,7 @@ jobs:
             --exclude '.github/' \
             --exclude '.shared-assets/' \
             --exclude '.selected-assets.txt' \
+            --exclude '.curated-assets.txt' \
             --exclude '_site/'
 
           while IFS= read -r source; do
@@ -118,16 +151,38 @@ jobs:
               encoding='utf-8',
           )
 
+          # Matches the curated list in the "Select and download gallery images" step —
+          # every file there is literally named sprite.png, so a filename-derived label
+          # (the old behavior) would just say "sprite" on every card. Keep these two lists
+          # in sync when the curated selection changes.
+          CAPTIONS = {
+              'units/humans/knight/tier4/sprite.png': 'Human Knight',
+              'units/humans/archer/tier4/sprite.png': 'Human Archer',
+              'units/humans/rogue/tier4/sprite.png': 'Human Rogue',
+              'units/humans/paladin/tier4/sprite.png': 'Human Paladin',
+              'units/humans/berserker/tier4/sprite.png': 'Human Berserker',
+              'units/humans/mage/tier4/sprite.png': 'Human Mage',
+              'units/humans/cleric/tier4/sprite.png': 'Human Cleric',
+              'units/dwarf/golem/tier4/sprite.png': 'Dwarf Golem',
+              'units/elf/blademaster/tier4/sprite.png': 'Elf Blademaster',
+              'units/skeleton/bone-warrior/tier4/sprite.png': 'Skeleton Bone Warrior',
+              'units/orc/row-03/tier4/sprite.png': 'Orc Berserker',
+              'units/merfolk/tide-guardian/tier4/sprite.png': 'Merfolk Tide Guardian',
+              'units/treants/row-05/tier4/sprite.png': 'Treant Grove Warden',
+              'units/vampire/crowned-vampire-king/sprite.png': 'Vampire King',
+              'units/goblin/crowned-warlord/sprite.png': 'Goblin Warlord',
+          }
+
           cards = []
           for relative_path in images:
               encoded_path = '/'.join(__import__('urllib.parse').parse.quote(part) for part in relative_path.split('/'))
-              label = Path(relative_path).stem.replace('-', ' ').replace('_', ' ')
+              label = CAPTIONS.get(relative_path, Path(relative_path).stem.replace('-', ' ').replace('_', ' ').title())
               cards.append(
                   '<figure>'
                   '<div class="game-art-card">'
                   f'<img loading="lazy" decoding="async" src="assets/game/{encoded_path}" alt="{html.escape(label)}">'
                   '</div>'
-                  f'<figcaption class="game-art-meta">{html.escape(relative_path)}</figcaption>'
+                  f'<figcaption class="game-art-meta">{html.escape(label)}</figcaption>'
                   '</figure>'
               )
 
@@ -136,15 +191,15 @@ jobs:
             .game-art-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin-top:2rem}
             .game-art-card{min-height:280px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(145deg,rgba(33,22,44,.92),rgba(18,13,24,.96));border:1px solid var(--line);border-radius:var(--radius);padding:.75rem}
             .game-art-card img{display:block;width:100%;height:260px;object-fit:contain;filter:drop-shadow(0 16px 24px rgba(0,0,0,.45))}
-            .game-art-meta{margin-top:.55rem;color:var(--muted);font-size:.78rem;overflow-wrap:anywhere}
+            .game-art-meta{margin-top:.55rem;color:var(--muted);font-size:.78rem;text-align:center;overflow-wrap:anywhere}
             @media(max-width:900px){.game-art-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
             @media(max-width:560px){.game-art-grid{grid-template-columns:1fr}.game-art-card img{height:240px}}
           </style>
           <section id="game-art">
             <div class="wrap">
               <div class="section-head">
-                <div><p class="eyebrow">Shared asset repository</p><h2>Game art from Portal Siege.</h2></div>
-                <p>These images are loaded from the finalized game assets during deployment.</p>
+                <div><p class="eyebrow">The roster</p><h2>Real art from the game.</h2></div>
+                <p>A look at the Human army and the enemy races facing it, pulled directly from the current build.</p>
               </div>
               <div class="game-art-grid">''' + ''.join(cards) + '''</div>
             </div>
