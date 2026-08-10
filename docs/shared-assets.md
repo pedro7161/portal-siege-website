@@ -1,61 +1,34 @@
-# Shared asset repository integration
+# Game art on the website
 
-The website consumes presentation-ready exports from the private repository `pedro7161/Portal-Siege-Assets` during GitHub Pages deployment.
-
-## Why this is not a plain submodule
-
-A normal Git submodule only stores a commit pointer. Because the asset repository is private and this website repository is public, GitHub Pages still needs credentials to clone the asset repository. The deployment workflow therefore performs an authenticated second checkout and assembles a public Pages artifact.
-
-Only the curated website export folder is published. Raw generations, project files, process history, manifests, and game-only assets remain private.
-
-## Asset contract
-
-The deploy workflow pulls an explicit, curated list of file paths directly from
-`final/game/assets/units/...` in the asset repository — one hero-tier sprite per
-playable Human class, plus one flagship unit per implemented enemy race. That list
-lives in `.github/workflows/deploy-pages.yml`'s "Select and download gallery images"
-step, alongside a matching `CAPTIONS` map in "Build shared asset gallery" (every
-source file is literally named `sprite.png`, so captions can't be derived from the
-filename).
-
-`final/web/assets/` and `assets/website/` were an earlier plan for a pre-curated
-export folder the workflow would pull wholesale; that folder was never populated
-(still just a `.gitkeep`), so the workflow was changed to select specific paths
-instead. If a curated export folder gets built later, prefer switching back to it
-over maintaining a hand-picked file list here.
-
-The selected files are copied into the deployed site as:
+Game art shown on the website is committed directly to this repository under:
 
 ```text
-assets/game/
+assets/game/units/<race>/<category>/tier<N>/sprite.png
 ```
 
-Website HTML should therefore use paths such as:
+(or `assets/game/units/<race>/<name>/sprite.png` for special/bonus units that don't
+use a tiered category — e.g. the goblin and vampire archetypes).
 
-```html
-<img src="assets/game/units/humans/knight/tier4/sprite.png" alt="Human Knight">
-```
+This mirrors the path layout under `public/assets/units/` in the game repository
+(`pedro7161/Portal-Siege`), so an image can be copied over as-is without renaming.
 
-## Required repository secret
+## Adding or swapping an image
 
-Create a fine-grained personal access token with read-only access to `pedro7161/Portal-Siege-Assets`, then add it to the website repository as an Actions secret named:
+1. Pick the sprite from the game repo, e.g. `public/assets/units/humans/knight/tier4/sprite.png`.
+2. Copy it into this repo at the matching path under `assets/game/units/...`.
+3. Add (or update) an `<img>` card in `index.html`'s `#game-art` section:
+   ```html
+   <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/humans/knight/tier4/sprite.png" alt="Human Knight"></div><figcaption class="game-art-meta">Human Knight</figcaption></figure>
+   ```
+4. Commit both the image and the HTML change together.
 
-```text
-ASSETS_REPO_TOKEN
-```
+## Why not pull from the private asset repository at deploy time
 
-Required token permission:
-
-- Repository contents: Read-only
-
-Do not place the token in source files, workflow YAML, HTML, or repository variables.
-
-## GitHub Pages setting
-
-After this workflow is merged, set the website repository's Pages source to **GitHub Actions** rather than **Deploy from a branch**.
-
-## Local development
-
-For local previews, clone the asset repository separately and copy its curated website export to `assets/game/`, or use a local symlink that is excluded from commits.
-
-The deployed website never receives the entire private asset repository; only the approved export directory is copied into the Pages artifact.
+An earlier version of this workflow authenticated into the private
+`pedro7161/Portal-Siege-Assets` repository during each deploy and copied a curated
+(or, for a while, blindly-selected) set of images into the build. That added a
+private-repo checkout, a Git LFS pull, and a token dependency (`ASSETS_REPO_TOKEN`)
+to every deploy, and the images it produced weren't showing up reliably on the
+live site. Committing the handful of presentation images this site actually needs
+directly into the repo removes all of that — the deploy workflow is now a plain
+static-site upload with no external dependencies.

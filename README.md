@@ -5,8 +5,6 @@ Static GitHub Pages website for **Portal Siege**, a dark-fantasy strategy autoba
 The website content is synchronized against:
 
 - Game repository: `pedro7161/Portal-Siege`
-- Shared asset repository: `pedro7161/Portal-Siege-Assets`
-- Primary game content branch used: `feature/ai-sprite-assets`
 - Stable implementation reference: `main`
 
 ## Project structure
@@ -15,20 +13,13 @@ The website content is synchronized against:
 portal-siege-website/
 ├── .github/workflows/deploy-pages.yml
 ├── assets/
-│   └── portal-siege-emblem.svg
+│   ├── portal-siege-emblem.svg
+│   └── game/units/...        # presentation sprites, committed directly (see docs/shared-assets.md)
 ├── docs/shared-assets.md
 ├── index.html
 ├── privacy-policy.html
 └── README.md
 ```
-
-During deployment, curated files from the private asset repository are copied into the generated site at:
-
-```text
-assets/game/
-```
-
-The private source repository itself is never published.
 
 ## Content represented
 
@@ -56,26 +47,14 @@ python3 -m http.server 8080
 
 Then open `http://localhost:8080/`.
 
-Shared images are not committed to this repository. For a full local preview, populate `assets/game/` from the curated website export in `Portal-Siege-Assets`.
+All images the site needs (including `assets/game/`) are committed directly to this repository, so a local preview shows exactly what deploys.
 
 ## Deployment
 
-Deployment is handled by `.github/workflows/deploy-pages.yml`.
+Deployment is handled by `.github/workflows/deploy-pages.yml`: it checks out this repository, assembles a static `_site/` (excluding `.git/`, `.github/`, `docs/`, and `README.md`), and uploads it to GitHub Pages. No other repository, secret, or external dependency is involved.
 
-The workflow:
-
-1. checks out this public website repository;
-2. checks out the private `Portal-Siege-Assets` repository using the `ASSETS_REPO_TOKEN` secret;
-3. copies only `final/web/assets/` or `assets/website/` into `assets/game/`;
-4. uploads the assembled static site to GitHub Pages.
-
-After merging this setup:
-
-- add the `ASSETS_REPO_TOKEN` Actions secret;
-- set **Settings → Pages → Source** to **GitHub Actions**.
-
-See `docs/shared-assets.md` for the token and folder contract.
+**Settings → Pages → Source** must be set to **GitHub Actions**.
 
 ## Asset policy
 
-The website consumes only lightweight, presentation-ready exports. Raw generation batches, layered project files, processing history, duplicated sprites, and game-only assets remain in the private shared asset repository.
+Only a small, curated set of presentation sprites lives in `assets/game/` — one hero-tier sprite per playable Human class, plus one flagship unit per implemented enemy race. See `docs/shared-assets.md` for the exact path convention and how to add or swap an image.

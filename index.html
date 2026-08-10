@@ -31,6 +31,9 @@
     @media(max-width:900px){.links a:not(.button){display:none}.hero{min-height:auto;padding-top:4rem}.hero-grid,.section-head,.showcase{grid-template-columns:1fr}.hero-copy{max-width:none}.emblem{max-width:390px;margin-inline:auto}.loop{grid-template-columns:repeat(2,1fr)}.class-grid{grid-template-columns:repeat(3,1fr)}.race-grid{grid-template-columns:repeat(2,1fr)}.boss-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:560px){.wrap{width:min(calc(100% - 1.2rem),var(--max))}.nav-inner{min-height:60px}.links .button{padding:.6rem .8rem;font-size:.8rem}.hero{padding-top:3rem}.hero-grid{gap:1rem}.hero h1{font-size:clamp(3rem,17vw,4.7rem)}section{padding:4.5rem 0}.loop,.race-grid,.boss-grid,.systems{grid-template-columns:1fr}.class-grid{grid-template-columns:repeat(2,1fr)}.class-card{min-height:150px}.development{grid-template-columns:1fr}.scene{min-height:300px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.emblem{animation:none}.button{transition:none}}
+    .game-art-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin-top:2rem}.game-art-card{min-height:280px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(145deg,rgba(33,22,44,.92),rgba(18,13,24,.96));border:1px solid var(--line);border-radius:var(--radius);padding:.75rem}.game-art-card img{display:block;width:100%;height:260px;object-fit:contain;filter:drop-shadow(0 16px 24px rgba(0,0,0,.45))}.game-art-meta{margin-top:.55rem;color:var(--muted);font-size:.78rem;text-align:center}
+    @media(max-width:900px){.game-art-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:560px){.game-art-grid{grid-template-columns:1fr}.game-art-card img{height:240px}}
   </style>
 </head>
 <body>
@@ -39,7 +42,7 @@
     <div class="wrap nav-inner">
       <a class="brand" href="#top">PORTAL <span>SIEGE</span></a>
       <div class="links">
-        <a href="#gameplay">Gameplay</a><a href="#army">Army</a><a href="#enemies">Enemies</a><a href="#bosses">Bosses</a>
+        <a href="#gameplay">Gameplay</a><a href="#army">Army</a><a href="#enemies">Enemies</a><a href="#bosses">Bosses</a><a href="#game-art">Roster</a>
         <a class="button" href="https://github.com/pedro7161/Portal-Siege" rel="noopener">Game repository</a>
       </div>
     </div>
@@ -138,6 +141,29 @@
       <div class="wrap showcase">
         <div class="scene" role="img" aria-label="Stylized battlefield with a glowing portal facing a four-unit army"><div class="battle-line"><span class="unit"></span><span class="unit"></span><span class="unit"></span><span class="unit"></span></div></div>
         <div class="showcase-copy"><article class="card"><p class="eyebrow">Visual identity</p><h2 id="visual-title">Dark fantasy with readable combat.</h2><p>Current asset organization covers race, class, tier, structures, bosses, effects, projectiles, and attack-animation sequences. The website uses a restrained interpretation until selected game artwork is prepared for public presentation.</p></article><article class="card"><h3>Structures and siege</h3><p>Implemented asset paths include the Human castle, Demon portal, boss portal, projectiles, melee effects, and the Ballista Demon siege boss.</p></article></div>
+      </div>
+    </section>
+
+    <section id="game-art">
+      <div class="wrap">
+        <div class="section-head"><div><p class="eyebrow">The roster</p><h2>Real art from the game.</h2></div><p>A look at the Human army and the enemy races facing it, pulled directly from the current build.</p></div>
+        <div class="game-art-grid">
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/humans/knight/tier4/sprite.png" alt="Human Knight"></div><figcaption class="game-art-meta">Human Knight</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/humans/archer/tier4/sprite.png" alt="Human Archer"></div><figcaption class="game-art-meta">Human Archer</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/humans/rogue/tier4/sprite.png" alt="Human Rogue"></div><figcaption class="game-art-meta">Human Rogue</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/humans/paladin/tier4/sprite.png" alt="Human Paladin"></div><figcaption class="game-art-meta">Human Paladin</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/humans/berserker/tier4/sprite.png" alt="Human Berserker"></div><figcaption class="game-art-meta">Human Berserker</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/humans/mage/tier4/sprite.png" alt="Human Mage"></div><figcaption class="game-art-meta">Human Mage</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/humans/cleric/tier4/sprite.png" alt="Human Cleric"></div><figcaption class="game-art-meta">Human Cleric</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/dwarf/golem/tier4/sprite.png" alt="Dwarf Golem"></div><figcaption class="game-art-meta">Dwarf Golem</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/elf/blademaster/tier4/sprite.png" alt="Elf Blademaster"></div><figcaption class="game-art-meta">Elf Blademaster</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/skeleton/bone-warrior/tier4/sprite.png" alt="Skeleton Bone Warrior"></div><figcaption class="game-art-meta">Skeleton Bone Warrior</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/orc/row-03/tier4/sprite.png" alt="Orc Berserker"></div><figcaption class="game-art-meta">Orc Berserker</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/merfolk/tide-guardian/tier4/sprite.png" alt="Merfolk Tide Guardian"></div><figcaption class="game-art-meta">Merfolk Tide Guardian</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/treants/row-05/tier4/sprite.png" alt="Treant Grove Warden"></div><figcaption class="game-art-meta">Treant Grove Warden</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/vampire/crowned-vampire-king/sprite.png" alt="Vampire King"></div><figcaption class="game-art-meta">Vampire King</figcaption></figure>
+          <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/goblin/crowned-warlord/sprite.png" alt="Goblin Warlord"></div><figcaption class="game-art-meta">Goblin Warlord</figcaption></figure>
+        </div>
       </div>
     </section>
 
