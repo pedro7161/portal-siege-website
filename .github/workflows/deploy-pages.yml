@@ -38,6 +38,19 @@ jobs:
             --exclude 'README.md' \
             --exclude '_site/'
 
+          # Keep deployed image URLs aligned with the current canonical names in
+          # Portal-Siege-Assets while retaining the old mirror paths for compatibility.
+          sed -i \
+            -e 's#assets/game/units/orc/row-03/tier4/sprite.png#assets/game/units/orc/berserker/tier4/sprite.png#g' \
+            -e 's#assets/game/units/treants/row-05/tier4/sprite.png#assets/game/units/treants/deeproot-warden/tier4/sprite.png#g' \
+            -e 's#Treant Grove Warden#Treant Deeproot Warden#g' \
+            _site/index.html
+
+          grep -q 'assets/game/units/orc/berserker/tier4/sprite.png' _site/index.html
+          grep -q 'assets/game/units/treants/deeproot-warden/tier4/sprite.png' _site/index.html
+          test -f _site/assets/game/units/orc/berserker/tier4/sprite.png
+          test -f _site/assets/game/units/treants/deeproot-warden/tier4/sprite.png
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
