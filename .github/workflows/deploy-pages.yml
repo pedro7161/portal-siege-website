@@ -1,9 +1,7 @@
 name: Deploy Portal Siege website
 
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+# Publishing is intentional: deploy only when explicitly requested from Actions.
+on: workflow_dispatch
 
 permissions:
   contents: read
