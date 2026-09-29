@@ -3,10 +3,10 @@
 Game art shown on the website is committed directly to this repository under:
 
 ```text
-assets/game/units/<race>/<category>/tier<N>/sprite.png
+assets/game/units/<race>/<category>/tier<N>/sprite.webp
 ```
 
-(or `assets/game/units/<race>/<name>/sprite.png` for special/bonus units that don't
+(or `assets/game/units/<race>/<name>/sprite.webp` for special/bonus units that don't
 use a tiered category — e.g. the goblin and vampire archetypes).
 
 This mirrors the path layout under `public/assets/units/` in the game repository
@@ -15,10 +15,15 @@ This mirrors the path layout under `public/assets/units/` in the game repository
 ## Adding or swapping an image
 
 1. Pick the sprite from the game repo, e.g. `public/assets/units/humans/knight/tier4/sprite.png`.
-2. Copy it into this repo at the matching path under `assets/game/units/...`.
+2. Convert it into this repo at the matching path under `assets/game/units/...`, as a
+   640px-max WebP (the cards display at 260px tall, so this stays sharp on 2x screens and
+   keeps each image around 50 KB instead of ~800 KB):
+   ```bash
+   python3 -c "from PIL import Image; im=Image.open('SRC.png').convert('RGBA'); im.thumbnail((640,640)); im.save('assets/game/units/.../sprite.webp','WEBP',quality=85,method=6)"
+   ```
 3. Add (or update) an `<img>` card in `index.html`'s `#game-art` section:
    ```html
-   <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/humans/knight/tier4/sprite.png" alt="Human Knight"></div><figcaption class="game-art-meta">Human Knight</figcaption></figure>
+   <figure><div class="game-art-card"><img loading="lazy" decoding="async" src="assets/game/units/humans/knight/tier4/sprite.webp" width="640" height="480" alt="Human Knight"></div><figcaption class="game-art-meta">Human Knight</figcaption></figure>
    ```
 4. Commit both the image and the HTML change together.
 
